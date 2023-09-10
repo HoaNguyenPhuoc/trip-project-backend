@@ -14,7 +14,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "tour")
+@Table(name = "tours")
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
@@ -23,7 +23,6 @@ import javax.persistence.Table;
 public class Tour {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false)
     private Integer id;
 
     private String name;
