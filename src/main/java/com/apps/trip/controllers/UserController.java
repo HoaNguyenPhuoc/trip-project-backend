@@ -2,6 +2,7 @@ package com.apps.trip.controllers;
 
 import com.apps.trip.dto.ChangeInfoRequest;
 import com.apps.trip.dto.UserDto;
+import com.apps.trip.dto.UserRequest;
 import com.apps.trip.service.UserService;
 import com.apps.trip.utils.AppsUtils;
 import org.springframework.data.domain.Page;
@@ -55,5 +56,10 @@ public class UserController {
     @GetMapping("{id}")
     public ResponseEntity<UserDto> getById(@PathVariable("id") Long id) {
         return ResponseEntity.ok(userService.findById(id));
+    }
+
+    @PostMapping
+    public ResponseEntity<Boolean> save(@RequestBody UserRequest request) {
+        return ResponseEntity.ok(userService.save(request));
     }
 }
