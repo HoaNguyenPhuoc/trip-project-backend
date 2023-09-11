@@ -42,13 +42,13 @@ public class TourServiceImpl implements TourService {
     }
 
     @Override
-    public Tour findById(int id) {
+    public Tour findById(long id) {
         return tourRepository.findById(id).orElseThrow(() -> new RuntimeException("Cant not fount this id"));
     }
 
     @Override
     @Transactional
-    public boolean update(int id, TourRequest request) {
+    public boolean update(long id, TourRequest request) {
         Tour tour = findById(id);
         tour.setName(request.getName());
         tour.setCountry(request.getCountry());
@@ -65,7 +65,7 @@ public class TourServiceImpl implements TourService {
 
     @Override
     @Transactional
-    public boolean delete(int id) {
+    public boolean delete(long id) {
         Tour tour = findById(id);
 
         tourRepository.delete(tour);

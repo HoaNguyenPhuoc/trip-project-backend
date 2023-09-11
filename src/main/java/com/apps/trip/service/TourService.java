@@ -10,9 +10,9 @@ public interface TourService {
 
     boolean save(TourRequest request);
 
-    Tour findById(int id);
+    Tour findById(long id);
 
-    boolean update(int id, TourRequest request);
+    boolean update(long id, TourRequest request);
 
-    boolean delete(int id);
+    boolean delete(long id);
 }

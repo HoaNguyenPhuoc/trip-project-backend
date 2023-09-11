@@ -36,17 +36,17 @@ public class TourController {
     }
 
     @GetMapping("{id}")
-    public ResponseEntity<Tour> findById(@PathVariable("id") int id) {
+    public ResponseEntity<Tour> findById(@PathVariable("id") Long id) {
         return ResponseEntity.ok(tourService.findById(id));
     }
 
     @PutMapping("{id}")
-    public ResponseEntity<Boolean> update(@PathVariable("id") int id, @RequestBody TourRequest request) {
+    public ResponseEntity<Boolean> update(@PathVariable("id") Long id, @RequestBody TourRequest request) {
         return ResponseEntity.ok(tourService.update(id, request));
     }
 
     @DeleteMapping("{id}")
-    public ResponseEntity<Boolean> delete(@PathVariable("id") int id) {
+    public ResponseEntity<Boolean> delete(@PathVariable("id") Long id) {
         return ResponseEntity.ok(tourService.delete(id));
     }
 }
