@@ -17,7 +17,7 @@ public class OpenAPIConfiguration {
     public OpenAPI customOpenAPI() {
         return new OpenAPI()
                 .components(new Components().addSecuritySchemes("JWT",
-                        new SecurityScheme().type(SecurityScheme.Type.HTTP).scheme("bearer").bearerFormat("JWT")
+                        new SecurityScheme().type(SecurityScheme.Type.HTTPS).scheme("bearer").bearerFormat("JWT")
                                 .in(SecurityScheme.In.HEADER).name("Authorization")))
                 .info(new Info().title("Trips App API").version("snapshot"))
                 .addSecurityItem(
