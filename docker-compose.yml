@@ -1,9 +1,9 @@
 version: '3.9'
 services:
   trip-service:
-    logging:
-      options:
-        max-size: 20m
+    build:
+      context: .
+      dockerfile: Dockerfile
     image: 'trip-backend:latest'
     container_name: trip-backend
     working_dir: /app
