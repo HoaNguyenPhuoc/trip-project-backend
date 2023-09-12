@@ -4,4 +4,5 @@ RUN mvn clean install
 
 FROM adoptopenjdk/openjdk11:alpine-jre
 COPY --from=MAVEN_BUILD ./target/*.jar /trip-spring.jar
+EXPOSE 8080
 ENTRYPOINT ["java","-jar","trip-spring.jar"]
