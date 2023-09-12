@@ -6,8 +6,6 @@ services:
       dockerfile: Dockerfile
     image: 'trip-backend:latest'
     container_name: trip-backend
-    working_dir: /app
-    command: [ "java", "-jar", "test.jar" ]
     restart: always
     ports:
       - '8080:8080'
