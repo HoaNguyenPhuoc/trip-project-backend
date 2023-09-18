@@ -46,7 +46,7 @@ public class UserController {
         return ResponseEntity.ok(userService.getUsers(PageRequest.of(page, size)));
     }
 
-    @PostMapping("{id}")
+    @PutMapping("{id}")
     public ResponseEntity<ResponseJson> changeInfoById(@PathVariable("id") Long id, @RequestBody ChangeInfoRequest request) {
         userService.changeInfoById(id, request);
         return ResponseEntity.ok(new ResponseJson(200, SUCCESS));

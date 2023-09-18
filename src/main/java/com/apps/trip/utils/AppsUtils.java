@@ -6,6 +6,10 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class AppsUtils {
+    private AppsUtils() {
+
+    }
+
     public static String getUsername() {
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         if (principal instanceof UserDetails) {
