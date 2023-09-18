@@ -14,9 +14,9 @@ public interface UserService {
 
     UserDto findById(Long id);
 
-    boolean changeInfo(ChangeInfoRequest request);
+    void changeInfo(ChangeInfoRequest request);
 
-    boolean changeInfoById(Long id, ChangeInfoRequest request);
+    void changeInfoById(Long id, ChangeInfoRequest request);
 
-    boolean deleteById(Long id);
+    void deleteById(Long id);
 }

@@ -2,6 +2,7 @@ package com.apps.trip.controllers;
 
 import com.apps.trip.dto.ReviewRequest;
 import com.apps.trip.models.Review;
+import com.apps.trip.payload.response.ResponseJson;
 import com.apps.trip.service.ReviewService;
 import lombok.Getter;
 import org.springframework.data.domain.Page;
@@ -16,6 +17,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import static com.apps.trip.controllers.UserController.SUCCESS;
 
 @RestController
 @RequestMapping("reviews")
@@ -33,8 +36,9 @@ public class ReviewController {
     }
 
     @PostMapping
-    public ResponseEntity<Boolean> save(ReviewRequest request) {
-        return ResponseEntity.ok(reviewService.save(request));
+    public ResponseEntity<ResponseJson> save(ReviewRequest request) {
+        reviewService.save(request);
+        return ResponseEntity.ok(new ResponseJson(200, SUCCESS));
     }
 
     @GetMapping("{id}")
@@ -43,17 +47,20 @@ public class ReviewController {
     }
 
     @PutMapping("{id}")
-    public ResponseEntity<Boolean> update(@PathVariable("id") Long id, @RequestBody ReviewRequest request) {
-        return ResponseEntity.ok(reviewService.update(request, id));
+    public ResponseEntity<ResponseJson> update(@PathVariable("id") Long id, @RequestBody ReviewRequest request) {
+        reviewService.update(request, id);
+        return ResponseEntity.ok(new ResponseJson(200, SUCCESS));
     }
 
     @DeleteMapping("{id}")
-    public ResponseEntity<Boolean> delete(@PathVariable("id") Long id) {
-        return ResponseEntity.ok(reviewService.delete(id));
+    public ResponseEntity<ResponseJson> delete(@PathVariable("id") Long id) {
+        reviewService.delete(id);
+        return ResponseEntity.ok(new ResponseJson(200, SUCCESS));
     }
 
     @PutMapping("change-status/{id}")
-    public ResponseEntity<Boolean> changeStatus(@PathVariable("id") Long id) {
-        return ResponseEntity.ok(reviewService.changeStatus(id));
+    public ResponseEntity<ResponseJson> changeStatus(@PathVariable("id") Long id) {
+        reviewService.changeStatus(id);
+        return ResponseEntity.ok(new ResponseJson(200, SUCCESS));
     }
 }

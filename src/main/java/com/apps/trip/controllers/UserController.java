@@ -3,6 +3,7 @@ package com.apps.trip.controllers;
 import com.apps.trip.dto.ChangeInfoRequest;
 import com.apps.trip.dto.UserDto;
 import com.apps.trip.dto.UserRequest;
+import com.apps.trip.payload.response.ResponseJson;
 import com.apps.trip.service.UserService;
 import com.apps.trip.utils.AppsUtils;
 import org.springframework.data.domain.Page;
@@ -21,6 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("users")
 public class UserController {
+    public static final String SUCCESS = "Success";
     private final UserService userService;
 
     public UserController(UserService userService) {
@@ -34,8 +36,9 @@ public class UserController {
     }
 
     @PutMapping
-    public ResponseEntity<Boolean> changeInfoUser(@RequestBody ChangeInfoRequest request) {
-        return ResponseEntity.ok(userService.changeInfo(request));
+    public ResponseEntity<ResponseJson> changeInfoUser(@RequestBody ChangeInfoRequest request) {
+        userService.changeInfo(request);
+        return ResponseEntity.ok(new ResponseJson(200, SUCCESS));
     }
 
     @PostMapping("filter")
@@ -44,13 +47,15 @@ public class UserController {
     }
 
     @PostMapping("{id}")
-    public ResponseEntity<Boolean> changeInfoById(@PathVariable("id") Long id, @RequestBody ChangeInfoRequest request) {
-        return ResponseEntity.ok(userService.changeInfoById(id, request));
+    public ResponseEntity<ResponseJson> changeInfoById(@PathVariable("id") Long id, @RequestBody ChangeInfoRequest request) {
+        userService.changeInfoById(id, request);
+        return ResponseEntity.ok(new ResponseJson(200, SUCCESS));
     }
 
     @DeleteMapping("{id}")
-    public ResponseEntity<Boolean> deleteInfoById(@PathVariable("id") Long id) {
-        return ResponseEntity.ok(userService.deleteById(id));
+    public ResponseEntity<ResponseJson> deleteInfoById(@PathVariable("id") Long id) {
+        userService.deleteById(id);
+        return ResponseEntity.ok(new ResponseJson(200, SUCCESS));
     }
 
     @GetMapping("{id}")
@@ -59,7 +64,8 @@ public class UserController {
     }
 
     @PostMapping
-    public ResponseEntity<Boolean> save(@RequestBody UserRequest request) {
-        return ResponseEntity.ok(userService.save(request));
+    public ResponseEntity<ResponseJson> save(@RequestBody UserRequest request) {
+        userService.save(request);
+        return ResponseEntity.ok(new ResponseJson(200, SUCCESS));
     }
 }

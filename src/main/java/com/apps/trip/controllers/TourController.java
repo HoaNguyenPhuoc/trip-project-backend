@@ -2,6 +2,7 @@ package com.apps.trip.controllers;
 
 import com.apps.trip.dto.TourRequest;
 import com.apps.trip.models.Tour;
+import com.apps.trip.payload.response.ResponseJson;
 import com.apps.trip.service.TourService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -16,6 +17,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import static com.apps.trip.controllers.UserController.SUCCESS;
+
 @RestController
 @RequestMapping("tours")
 public class TourController {
@@ -26,8 +29,9 @@ public class TourController {
     }
 
     @PostMapping
-    public ResponseEntity<Boolean> save(@RequestBody TourRequest request) {
-        return ResponseEntity.ok(tourService.save(request));
+    public ResponseEntity<ResponseJson> save(@RequestBody TourRequest request) {
+        tourService.save(request);
+        return ResponseEntity.ok(new ResponseJson(200, SUCCESS));
     }
 
     @GetMapping("filter")
@@ -41,12 +45,14 @@ public class TourController {
     }
 
     @PutMapping("{id}")
-    public ResponseEntity<Boolean> update(@PathVariable("id") Long id, @RequestBody TourRequest request) {
-        return ResponseEntity.ok(tourService.update(id, request));
+    public ResponseEntity<ResponseJson> update(@PathVariable("id") Long id, @RequestBody TourRequest request) {
+        tourService.update(id, request);
+        return ResponseEntity.ok(new ResponseJson(200, SUCCESS));
     }
 
     @DeleteMapping("{id}")
-    public ResponseEntity<Boolean> delete(@PathVariable("id") Long id) {
-        return ResponseEntity.ok(tourService.delete(id));
+    public ResponseEntity<ResponseJson> delete(@PathVariable("id") Long id) {
+        tourService.delete(id);
+        return ResponseEntity.ok(new ResponseJson(200, SUCCESS));
     }
 }

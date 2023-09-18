@@ -51,6 +51,7 @@ public class UserServiceImpl implements UserService {
         }
         user.setRoles(roles);
 
+        userRepository.save(user);
         return true;
     }
 
@@ -88,32 +89,26 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public boolean changeInfo(ChangeInfoRequest request) {
+    public void changeInfo(ChangeInfoRequest request) {
         Optional<User> userOptional = getUser(AppsUtils.getUsername());
         if (userOptional.isPresent()) {
             User user = userOptional.get();
             user.setFullName(request.getFullName());
             user.setPhoneNumber(request.getPhoneNumber());
             userRepository.save(user);
-
-            return true;
         }
-        return false;
     }
 
     @Override
     @Transactional
-    public boolean changeInfoById(Long id, ChangeInfoRequest request) {
+    public void changeInfoById(Long id, ChangeInfoRequest request) {
         Optional<User> userOptional = getUserById(id);
         if (userOptional.isPresent()) {
             User user = userOptional.get();
             user.setFullName(request.getFullName());
             user.setPhoneNumber(request.getPhoneNumber());
             userRepository.save(user);
-
-            return true;
         }
-        return false;
     }
 
     private Optional<User> getUserById(Long id) {
@@ -122,13 +117,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public boolean deleteById(Long id) {
+    public void deleteById(Long id) {
         Optional<User> userOptional = getUserById(id);
-        if (userOptional.isPresent()) {
-            userRepository.delete(userOptional.get());
-
-            return true;
-        }
-        return false;
+        userOptional.ifPresent(userRepository::delete);
     }
 }
