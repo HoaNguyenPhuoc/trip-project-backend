@@ -121,4 +121,9 @@ public class UserServiceImpl implements UserService {
         Optional<User> userOptional = getUserById(id);
         userOptional.ifPresent(userRepository::delete);
     }
+
+    @Override
+    public User findByUsername(String username) {
+        return userRepository.findByUsername(username).orElse(new User());
+    }
 }
