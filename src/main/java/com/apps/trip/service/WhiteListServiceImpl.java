@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class WhiteListServiceImpl implements WhiteListService {
@@ -23,8 +24,13 @@ public class WhiteListServiceImpl implements WhiteListService {
     }
 
     @Override
-    public void addWhiteList(int tourId) {
-        User user = userService.findByUsername(AppsUtils.getUsername());
+    public boolean addWhiteList(long tourId) {
+        String username = AppsUtils.getUsername();
+        Optional<WhiteList> whiteList1 = whiteListRepository.findByUsernameAndTourId(username, tourId);
+        if (whiteList1.isEmpty()) {
+            return false;
+        }
+        User user = userService.findByUsername(username);
         Tour tour = tourService.findById(tourId);
 
         WhiteList whiteList = new WhiteList();
@@ -33,6 +39,7 @@ public class WhiteListServiceImpl implements WhiteListService {
         whiteList.setSubscriptionDate(LocalDateTime.now().toString());
 
         whiteListRepository.save(whiteList);
+        return true;
     }
 
     @Override

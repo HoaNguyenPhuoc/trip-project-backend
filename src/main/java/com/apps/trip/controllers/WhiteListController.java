@@ -1,6 +1,5 @@
 package com.apps.trip.controllers;
 
-import com.apps.trip.models.Tour;
 import com.apps.trip.models.WhiteList;
 import com.apps.trip.payload.response.ResponseJson;
 import com.apps.trip.service.WhiteListService;
@@ -27,8 +26,11 @@ public class WhiteListController {
 
     @PostMapping("{tourId}")
     public ResponseEntity<ResponseJson> save(@PathVariable("tourId") int tourId) {
-        whiteListService.addWhiteList(tourId);
-        return ResponseEntity.ok(new ResponseJson(200, SUCCESS));
+        boolean isSuccess = whiteListService.addWhiteList(tourId);
+        if (isSuccess) {
+            return ResponseEntity.ok(new ResponseJson(200, SUCCESS));
+        }
+        return ResponseEntity.ok(new ResponseJson(400, "User already add this tour"));
     }
 
     @GetMapping

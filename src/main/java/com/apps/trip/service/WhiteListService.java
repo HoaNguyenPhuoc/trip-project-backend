@@ -5,7 +5,7 @@ import com.apps.trip.models.WhiteList;
 import java.util.List;
 
 public interface WhiteListService {
-    void addWhiteList(int tourId);
+    boolean addWhiteList(long tourId);
 
     List<WhiteList> findByUsername();
 
