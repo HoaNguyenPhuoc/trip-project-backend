@@ -42,8 +42,9 @@ public class Tour {
 
     private int price;
 
+    @Column(name = "rating")
     private float rating;
 
-    @Column(name = "count_rating")
-    private int countRating;
+    @Column(name = "your_rating")
+    private float yourRating;
 }

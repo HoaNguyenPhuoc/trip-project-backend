@@ -34,7 +34,6 @@ public class TourServiceImpl implements TourService {
                 .description(request.getDescription())
                 .price(request.getPrice())
                 .rating(5)
-                .countRating(0)
                 .build();
 
         tourRepository.save(tour);
