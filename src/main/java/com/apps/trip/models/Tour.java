@@ -44,7 +44,4 @@ public class Tour {
 
     @Column(name = "rating")
     private float rating;
-
-    @Column(name = "your_rating")
-    private float yourRating;
 }
