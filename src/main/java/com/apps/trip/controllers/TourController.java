@@ -1,5 +1,6 @@
 package com.apps.trip.controllers;
 
+import com.apps.trip.dto.SearchRequest;
 import com.apps.trip.dto.TourRequest;
 import com.apps.trip.models.Tour;
 import com.apps.trip.payload.response.ResponseJson;
@@ -34,9 +35,10 @@ public class TourController {
         return ResponseEntity.ok(new ResponseJson(200, SUCCESS));
     }
 
-    @GetMapping("filter")
-    public ResponseEntity<Page<Tour>> getListUsers(@RequestParam("page") int page, @RequestParam("size") int size) {
-        return ResponseEntity.ok(tourService.findAll(PageRequest.of(page, size)));
+    @PostMapping("filter")
+    public ResponseEntity<Page<Tour>> getListUsers(@RequestParam("page") int page, @RequestParam("size") int size,
+                                                   @RequestBody SearchRequest request) {
+        return ResponseEntity.ok(tourService.findAll(PageRequest.of(page, size), request));
     }
 
     @GetMapping("{id}")

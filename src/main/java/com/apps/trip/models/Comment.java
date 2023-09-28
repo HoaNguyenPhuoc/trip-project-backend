@@ -24,10 +24,7 @@ public class Comment {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @JsonIgnore
-    @ManyToOne
-    @JoinColumn(name = "user_id")
-    private User user;
+    private String username;
 
     @JsonIgnore
     @ManyToOne
@@ -38,4 +35,5 @@ public class Comment {
 
     @Column(name = "created_time")
     private String createdTime;
+
 }

@@ -6,6 +6,7 @@ import com.apps.trip.models.WhiteList;
 import com.apps.trip.repository.WhiteListRepository;
 import com.apps.trip.utils.AppsUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -24,6 +25,7 @@ public class WhiteListServiceImpl implements WhiteListService {
     }
 
     @Override
+    @Transactional
     public boolean addWhiteList(long tourId) {
         String username = AppsUtils.getUsername();
         Optional<WhiteList> whiteList1 = whiteListRepository.findByUsernameAndTourId(username, tourId);
@@ -48,6 +50,7 @@ public class WhiteListServiceImpl implements WhiteListService {
     }
 
     @Override
+    @Transactional
     public void deleteById(long id) {
         WhiteList whiteList = whiteListRepository.findById(id).orElseThrow();
         whiteListRepository.delete(whiteList);

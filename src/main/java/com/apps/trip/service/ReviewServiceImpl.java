@@ -6,6 +6,7 @@ import com.apps.trip.repository.ReviewRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 
@@ -18,6 +19,7 @@ public class ReviewServiceImpl implements ReviewService {
     }
 
     @Override
+    @Transactional
     public boolean save(ReviewRequest request) {
         Review review = new Review();
         review.setTitle(request.getTitle());
@@ -42,6 +44,7 @@ public class ReviewServiceImpl implements ReviewService {
     }
 
     @Override
+    @Transactional
     public boolean update(ReviewRequest request, Long id) {
         Review review = findById(id);
         review.setTitle(request.getTitle());
@@ -54,6 +57,7 @@ public class ReviewServiceImpl implements ReviewService {
     }
 
     @Override
+    @Transactional
     public boolean delete(Long id) {
         Review review = findById(id);
         reviewRepository.delete(review);
@@ -62,6 +66,7 @@ public class ReviewServiceImpl implements ReviewService {
     }
 
     @Override
+    @Transactional
     public boolean changeStatus(Long id) {
         Review review = findById(id);
         review.setStatus(!review.isStatus());

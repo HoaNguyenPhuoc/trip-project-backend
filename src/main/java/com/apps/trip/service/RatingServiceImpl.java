@@ -8,6 +8,7 @@ import com.apps.trip.repository.RatingRepository;
 import com.apps.trip.utils.AppsUtils;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -45,6 +46,7 @@ public class RatingServiceImpl implements RatingService {
     }
 
     @Override
+    @Transactional
     public void update(RatingDto request, long tourId) {
         String username = AppsUtils.getUsername();
 
