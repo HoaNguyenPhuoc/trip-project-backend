@@ -1,7 +1,6 @@
 package com.apps.trip.service;
 
 import com.apps.trip.models.Tour;
-import com.apps.trip.models.User;
 import com.apps.trip.models.WhiteList;
 import com.apps.trip.repository.WhiteListRepository;
 import com.apps.trip.utils.AppsUtils;
@@ -16,12 +15,10 @@ import java.util.Optional;
 public class WhiteListServiceImpl implements WhiteListService {
     private final TourService tourService;
     private final WhiteListRepository whiteListRepository;
-    private final UserService userService;
 
-    public WhiteListServiceImpl(TourService tourService, WhiteListRepository whiteListRepository, UserService userService) {
+    public WhiteListServiceImpl(TourService tourService, WhiteListRepository whiteListRepository) {
         this.tourService = tourService;
         this.whiteListRepository = whiteListRepository;
-        this.userService = userService;
     }
 
     @Override
@@ -29,14 +26,13 @@ public class WhiteListServiceImpl implements WhiteListService {
     public boolean addWhiteList(long tourId) {
         String username = AppsUtils.getUsername();
         Optional<WhiteList> whiteList1 = whiteListRepository.findByUsernameAndTourId(username, tourId);
-        if (whiteList1.isEmpty()) {
+        if (whiteList1.isPresent()) {
             return false;
         }
-        User user = userService.findByUsername(username);
         Tour tour = tourService.findById(tourId);
 
         WhiteList whiteList = new WhiteList();
-        whiteList.setUser(user);
+        whiteList.setUsername(username);
         whiteList.setTour(tour);
         whiteList.setSubscriptionDate(LocalDateTime.now().toString());
 
@@ -46,7 +42,8 @@ public class WhiteListServiceImpl implements WhiteListService {
 
     @Override
     public List<WhiteList> findByUsername() {
-        return whiteListRepository.findByUserUsername(AppsUtils.getUsername());
+        String username = AppsUtils.getUsername();
+        return whiteListRepository.findByUsername(username);
     }
 
     @Override

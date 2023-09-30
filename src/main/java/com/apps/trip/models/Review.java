@@ -25,12 +25,12 @@ public class Review {
 
     private String title;
 
-    @Column(name = "img_preview", columnDefinition="TEXT")
+    @Column(name = "img_preview", columnDefinition="LONGTEXT")
     private String imgPreview;
 
     private String shortDescription;
 
-    @Column(name = "description", columnDefinition="TEXT")
+    @Column(name = "description", columnDefinition="LONGTEXT")
     private String description;
 
     private boolean status;

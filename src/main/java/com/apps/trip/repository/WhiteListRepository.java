@@ -10,9 +10,9 @@ import java.util.Optional;
 
 @Repository
 public interface WhiteListRepository extends JpaRepository<WhiteList, Long> {
-    @Query("select w from WhiteList w where w.user.username = ?1")
-    List<WhiteList> findByUserUsername(String username);
+    @Query("select w from WhiteList w where w.username = ?1")
+    List<WhiteList> findByUsername(String username);
 
-    @Query("select w from WhiteList w where w.user.username = ?1 and w.tour.id = ?2")
+    @Query("select w from WhiteList w where w.username = ?1 and w.tour.id = ?2")
     Optional<WhiteList> findByUsernameAndTourId(String username, Long id);
 }

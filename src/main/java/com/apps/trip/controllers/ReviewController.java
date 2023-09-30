@@ -36,7 +36,7 @@ public class ReviewController {
     }
 
     @PostMapping
-    public ResponseEntity<ResponseJson> save(ReviewRequest request) {
+    public ResponseEntity<ResponseJson> save(@RequestBody ReviewRequest request) {
         reviewService.save(request);
         return ResponseEntity.ok(new ResponseJson(200, SUCCESS));
     }
