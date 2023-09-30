@@ -27,10 +27,7 @@ public class Rating {
 
     private float star;
 
-    @JsonIgnore
-    @ManyToOne
-    @JoinColumn(name = "user_id")
-    private User user;
+    private String username;
 
     @ManyToOne
     @JoinColumn(name = "tour_id")

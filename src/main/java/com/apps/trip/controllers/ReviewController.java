@@ -4,7 +4,6 @@ import com.apps.trip.dto.ReviewRequest;
 import com.apps.trip.models.Review;
 import com.apps.trip.payload.response.ResponseJson;
 import com.apps.trip.service.ReviewService;
-import lombok.Getter;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.ResponseEntity;
@@ -31,7 +30,7 @@ public class ReviewController {
 
     @GetMapping
     public ResponseEntity<Page<Review>> filter(@RequestParam(defaultValue = "0") int page,
-                                               @RequestParam(defaultValue = "10") int size){
+                                               @RequestParam(defaultValue = "10") int size) {
         return ResponseEntity.ok(reviewService.filter(PageRequest.of(page, size)));
     }
 

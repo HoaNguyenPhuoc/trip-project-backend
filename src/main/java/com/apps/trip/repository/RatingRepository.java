@@ -10,13 +10,13 @@ import java.util.Optional;
 
 @Repository
 public interface RatingRepository extends JpaRepository<Rating, Long> {
-    @Query("select r from Rating r where r.user.username = ?1")
-    List<Rating> findByUsername(String username);
+    @Query("select r from Rating r where r.username = ?1")
+    Optional<Rating> findByUsername(String username);
 
     @Query("select r from Rating r where r.tour.id = ?1")
     List<Rating> findByTourId(Long id);
 
-    @Query("select r from Rating r where r.user.username = ?1 and r.tour.id = ?2")
+    @Query("select r from Rating r where r.username = ?1 and r.tour.id = ?2")
     Optional<Rating> findByUsernameAndTourId(String username, Long id);
 
 
