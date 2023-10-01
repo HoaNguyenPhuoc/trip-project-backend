@@ -45,8 +45,8 @@ public class Tour {
 
     private int price;
 
-    @Column(name = "rating")
-    private float rating;
+    @Column(name = "img", columnDefinition="TEXT")
+    private String img;
 
     @OneToMany(mappedBy = "tour", cascade = CascadeType.ALL)
     private List<Comment> comment;

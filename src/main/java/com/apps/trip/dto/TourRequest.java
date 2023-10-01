@@ -25,4 +25,6 @@ public class TourRequest {
     private String description;
 
     private int price;
+
+    private String img;
 }

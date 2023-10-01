@@ -34,7 +34,7 @@ public class TourServiceImpl implements TourService {
                 .place(request.getPlace())
                 .description(request.getDescription())
                 .price(request.getPrice())
-                .rating(5)
+                .img(request.getImg())
                 .build();
 
         tourRepository.save(tour);
@@ -58,6 +58,7 @@ public class TourServiceImpl implements TourService {
         tour.setPlace(request.getPlace());
         tour.setDescription(request.getDescription());
         tour.setPrice(request.getPrice());
+        tour.setImg(request.getImg());
 
         tourRepository.save(tour);
         return true;
