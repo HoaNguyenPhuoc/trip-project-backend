@@ -50,4 +50,7 @@ public class Tour {
 
     @OneToMany(mappedBy = "tour", cascade = CascadeType.ALL)
     private List<Comment> comment;
+
+    @OneToMany(mappedBy = "tour", cascade = CascadeType.ALL)
+    private List<WhiteList> whiteLists;
 }

@@ -43,7 +43,7 @@ public class TourServiceImpl implements TourService {
 
     @Override
     public Tour findById(long id) {
-        return tourRepository.findById(id).orElseThrow(() -> new RuntimeException("Cant not fount this id"));
+        return tourRepository.findById(id).orElse(null);
     }
 
     @Override

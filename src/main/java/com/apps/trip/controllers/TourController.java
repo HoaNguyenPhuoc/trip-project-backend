@@ -5,6 +5,7 @@ import com.apps.trip.dto.TourRequest;
 import com.apps.trip.models.Tour;
 import com.apps.trip.payload.response.ResponseJson;
 import com.apps.trip.service.TourService;
+import org.apache.commons.lang3.ObjectUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.ResponseEntity;
