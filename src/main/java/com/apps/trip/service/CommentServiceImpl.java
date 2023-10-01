@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.util.Optional;
 
 @Service
 public class CommentServiceImpl implements CommentService {
@@ -32,18 +33,19 @@ public class CommentServiceImpl implements CommentService {
     @Override
     @Transactional
     public void addCommentToTour(Integer tourId, CommentDto request) {
-        Tour tour = tourService.findById(tourId);
+        Optional<Tour> tour = tourService.findById(tourId);
         User user = userService.findByUsername(AppsUtils.getUsername());
+        if (tour.isPresent()) {
+            Comment cmm = new Comment();
+            cmm.setTour(tour.get());
+            cmm.setUsername(ObjectUtils.isEmpty(user.getUsername()) ? "" : user.getUsername());
+            cmm.setContent(request.getContent());
+            cmm.setCreatedTime(LocalDateTime.now(ZoneId.of("Asia/Ho_Chi_Minh")).toString());
 
-        Comment cmm = new Comment();
-        cmm.setTour(tour);
-        cmm.setUsername(ObjectUtils.isEmpty(user.getUsername()) ? "" : user.getUsername());
-        cmm.setContent(request.getContent());
-        cmm.setCreatedTime(LocalDateTime.now(ZoneId.of("Asia/Ho_Chi_Minh")).toString());
-
-        Comment comment = commentRepository.save(cmm);
-        tour.getComment().add(comment);
-        tourRepository.save(tour);
+            Comment comment = commentRepository.save(cmm);
+            tour.get().getComment().add(comment);
+            tourRepository.save(tour.get());
+        }
     }
 
     @Override

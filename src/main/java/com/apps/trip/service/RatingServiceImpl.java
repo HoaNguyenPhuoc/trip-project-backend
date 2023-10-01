@@ -29,16 +29,18 @@ public class RatingServiceImpl implements RatingService {
         if (optionalRating.isPresent()) {
             return false;
         }
-        Tour tour = tourService.findById(tourId);
+        Optional<Tour> tour = tourService.findById(tourId);
+        if (tour.isPresent()) {
+            Rating rating = new Rating();
+            rating.setUsername(username);
+            rating.setTour(tour.get());
+            rating.setStar(request.getRating());
+            rating.setCreatedAt(LocalDateTime.now().toString());
 
-        Rating rating = new Rating();
-        rating.setUsername(username);
-        rating.setTour(tour);
-        rating.setStar(request.getRating());
-        rating.setCreatedAt(LocalDateTime.now().toString());
-
-        ratingRepository.save(rating);
-        return true;
+            ratingRepository.save(rating);
+            return true;
+        }
+        return false;
     }
 
     @Override
