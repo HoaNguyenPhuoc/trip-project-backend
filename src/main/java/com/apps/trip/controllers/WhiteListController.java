@@ -1,6 +1,6 @@
 package com.apps.trip.controllers;
 
-import com.apps.trip.models.WhiteList;
+import com.apps.trip.models.Tour;
 import com.apps.trip.payload.response.ResponseJson;
 import com.apps.trip.service.WhiteListService;
 import org.springframework.http.ResponseEntity;
@@ -34,7 +34,7 @@ public class WhiteListController {
     }
 
     @GetMapping
-    public ResponseEntity<List<WhiteList>> findByUsername() {
+    public ResponseEntity<List<Tour>> findByUsername() {
         return ResponseEntity.ok(whiteListService.findByUsername());
     }
 

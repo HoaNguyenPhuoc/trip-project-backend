@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class WhiteListServiceImpl implements WhiteListService {
@@ -41,9 +42,11 @@ public class WhiteListServiceImpl implements WhiteListService {
     }
 
     @Override
-    public List<WhiteList> findByUsername() {
+    public List<Tour> findByUsername() {
         String username = AppsUtils.getUsername();
-        return whiteListRepository.findByUsername(username);
+        return whiteListRepository.findByUsername(username).stream()
+                .map(WhiteList::getTour)
+                .collect(Collectors.toList());
     }
 
     @Override
