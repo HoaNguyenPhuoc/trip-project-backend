@@ -40,7 +40,11 @@ public class WhiteListController {
 
     @DeleteMapping("{id}")
     public ResponseEntity<ResponseJson> delete(@PathVariable("id") long id) {
-        whiteListService.deleteById(id);
-        return ResponseEntity.ok(new ResponseJson(200, SUCCESS));
+        boolean b = whiteListService.deleteById(id);
+        if (b){
+            return ResponseEntity.ok(new ResponseJson(200, SUCCESS));
+        }
+        return ResponseEntity.ok(new ResponseJson(400, "Fails"));
+
     }
 }

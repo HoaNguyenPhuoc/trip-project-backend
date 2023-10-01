@@ -9,5 +9,5 @@ public interface WhiteListService {
 
     List<Tour> findByUsername();
 
-    void deleteById(long id);
+    boolean deleteById(long id);
 }

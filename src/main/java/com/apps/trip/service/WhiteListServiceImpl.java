@@ -51,8 +51,13 @@ public class WhiteListServiceImpl implements WhiteListService {
 
     @Override
     @Transactional
-    public void deleteById(long id) {
-        WhiteList whiteList = whiteListRepository.findById(id).orElseThrow();
-        whiteListRepository.delete(whiteList);
+    public boolean deleteById(long id) {
+        String username = AppsUtils.getUsername();
+        Optional<WhiteList> whiteList = whiteListRepository.findByUsernameAndTourId(username, id);
+        if (whiteList.isPresent()){
+            whiteListRepository.delete(whiteList.get());
+            return true;
+        }
+        return false;
     }
 }
