@@ -9,6 +9,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Optional;
+
 @Service
 public class TourServiceImpl implements TourService {
     private final TourRepository tourRepository;
@@ -42,34 +44,41 @@ public class TourServiceImpl implements TourService {
     }
 
     @Override
-    public Tour findById(long id) {
-        return tourRepository.findById(id).orElse(null);
+    public Optional<Tour> findById(long id) {
+        return tourRepository.findById(id);
     }
 
     @Override
     @Transactional
     public boolean update(long id, TourRequest request) {
-        Tour tour = findById(id);
-        tour.setName(request.getName());
-        tour.setCountry(request.getCountry());
-        tour.setDuration(request.getDuration());
-        tour.setType(request.getType());
-        tour.setScale(request.getScale());
-        tour.setPlace(request.getPlace());
-        tour.setDescription(request.getDescription());
-        tour.setPrice(request.getPrice());
-        tour.setImg(request.getImg());
+        Optional<Tour> tour = findById(id);
+        if (tour.isPresent()){
+            Tour tour1 = tour.get();
+            tour1.setName(request.getName());
+            tour1.setCountry(request.getCountry());
+            tour1.setDuration(request.getDuration());
+            tour1.setType(request.getType());
+            tour1.setScale(request.getScale());
+            tour1.setPlace(request.getPlace());
+            tour1.setDescription(request.getDescription());
+            tour1.setPrice(request.getPrice());
+            tour1.setImg(request.getImg());
 
-        tourRepository.save(tour);
-        return true;
+            tourRepository.save(tour1);
+            return true;
+        }
+
+        return false;
     }
 
     @Override
     @Transactional
     public boolean delete(long id) {
-        Tour tour = findById(id);
-
-        tourRepository.delete(tour);
-        return true;
+        Optional<Tour> tour = findById(id);
+        if (tour.isPresent()){
+            tourRepository.delete(tour.get());
+            return true;
+        }
+        return false;
     }
 }

@@ -30,15 +30,17 @@ public class WhiteListServiceImpl implements WhiteListService {
         if (whiteList1.isPresent()) {
             return false;
         }
-        Tour tour = tourService.findById(tourId);
+        Optional<Tour> tour = tourService.findById(tourId);
+        if (tour.isPresent()) {
+            WhiteList whiteList = new WhiteList();
+            whiteList.setUsername(username);
+            whiteList.setTour(tour.get());
+            whiteList.setSubscriptionDate(LocalDateTime.now().toString());
 
-        WhiteList whiteList = new WhiteList();
-        whiteList.setUsername(username);
-        whiteList.setTour(tour);
-        whiteList.setSubscriptionDate(LocalDateTime.now().toString());
-
-        whiteListRepository.save(whiteList);
-        return true;
+            whiteListRepository.save(whiteList);
+            return true;
+        }
+        return false;
     }
 
     @Override
@@ -54,7 +56,7 @@ public class WhiteListServiceImpl implements WhiteListService {
     public boolean deleteById(long id) {
         String username = AppsUtils.getUsername();
         Optional<WhiteList> whiteList = whiteListRepository.findByUsernameAndTourId(username, id);
-        if (whiteList.isPresent()){
+        if (whiteList.isPresent()) {
             whiteListRepository.delete(whiteList.get());
             return true;
         }

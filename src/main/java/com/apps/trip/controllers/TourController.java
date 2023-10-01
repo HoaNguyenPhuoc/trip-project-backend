@@ -19,6 +19,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Optional;
+
 import static com.apps.trip.controllers.UserController.SUCCESS;
 
 @RestController
@@ -44,7 +46,8 @@ public class TourController {
 
     @GetMapping("{id}")
     public ResponseEntity<Tour> findById(@PathVariable("id") Long id) {
-        return ResponseEntity.ok(tourService.findById(id));
+        Optional<Tour> byId = tourService.findById(id);
+        return byId.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.ok(null));
     }
 
     @PutMapping("{id}")
