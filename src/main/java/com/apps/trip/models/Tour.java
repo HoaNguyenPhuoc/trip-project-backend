@@ -55,4 +55,8 @@ public class Tour {
     @JsonIgnore
     @OneToMany(mappedBy = "tour", cascade = CascadeType.ALL)
     private List<WhiteList> whiteLists;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "tour", cascade = CascadeType.ALL)
+    private List<Rating> ratings;
 }
