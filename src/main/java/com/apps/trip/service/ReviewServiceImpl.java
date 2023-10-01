@@ -3,6 +3,7 @@ package com.apps.trip.service;
 import com.apps.trip.dto.ReviewRequest;
 import com.apps.trip.models.Review;
 import com.apps.trip.repository.ReviewRepository;
+import com.apps.trip.utils.AppsUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -27,6 +28,7 @@ public class ReviewServiceImpl implements ReviewService {
         review.setShortDescription(request.getShortDescription());
         review.setDescription(request.getDescription());
         review.setStatus(false);
+        review.setUsername(AppsUtils.getUsername());
         review.setCreatedTime(LocalDateTime.now().toString());
 
         reviewRepository.save(review);

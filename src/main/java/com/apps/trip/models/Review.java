@@ -25,6 +25,8 @@ public class Review {
 
     private String title;
 
+    private String username;
+
     @Column(name = "img_preview", columnDefinition="LONGTEXT")
     private String imgPreview;
 
