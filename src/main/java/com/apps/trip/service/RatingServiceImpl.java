@@ -49,7 +49,7 @@ public class RatingServiceImpl implements RatingService {
             rating.setTour(null);
             return rating;
         }).collect(Collectors.toList());
-        Optional<Rating> byUsername = ratingRepository.findByUsername(username);
+        Optional<Rating> byUsername = ratingRepository.findByUsernameAndTourId(username, tourId);
         if (byUsername.isPresent()) {
             myRating = byUsername.get().getStar();
         }
