@@ -33,8 +33,8 @@ public class RatingController {
         return ResponseEntity.ok(new ResponseJson(400, "User already rating this tour"));
     }
 
-    @GetMapping("{id}")
-    public ResponseEntity<RatingResponse> getRating(@PathVariable("id") Long tourId) {
+    @GetMapping("{tourId}")
+    public ResponseEntity<RatingResponse> getRating(@PathVariable("tourId") Long tourId) {
         RatingResponse ratingByTourId = ratingService.ratingByTourId(tourId);
 
         return ResponseEntity.ok(ratingByTourId);
