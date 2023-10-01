@@ -1,5 +1,6 @@
 package com.apps.trip.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -51,6 +52,7 @@ public class Tour {
     @OneToMany(mappedBy = "tour", cascade = CascadeType.ALL)
     private List<Comment> comment;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "tour", cascade = CascadeType.ALL)
     private List<WhiteList> whiteLists;
 }
