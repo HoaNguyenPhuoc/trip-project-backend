@@ -5,6 +5,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.List;
+
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
@@ -27,4 +29,6 @@ public class TourRequest {
     private int price;
 
     private String img;
+
+    private List<String> favorite;
 }

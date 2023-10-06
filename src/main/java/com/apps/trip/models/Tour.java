@@ -46,6 +46,8 @@ public class Tour {
 
     private int price;
 
+    private String favorite;
+
     @Column(name = "img", columnDefinition="TEXT")
     private String img;
 

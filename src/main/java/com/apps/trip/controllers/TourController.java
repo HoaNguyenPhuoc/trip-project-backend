@@ -19,7 +19,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 import static com.apps.trip.controllers.UserController.SUCCESS;
 
@@ -60,5 +62,10 @@ public class TourController {
     public ResponseEntity<ResponseJson> delete(@PathVariable("id") Long id) {
         tourService.delete(id);
         return ResponseEntity.ok(new ResponseJson(200, SUCCESS));
+    }
+
+    @GetMapping("recomment")
+    public ResponseEntity<Set<Tour>> getRecomment() {
+        return ResponseEntity.ok(tourService.getTourRecomment());
     }
 }

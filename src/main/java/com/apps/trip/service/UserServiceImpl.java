@@ -39,6 +39,10 @@ public class UserServiceImpl implements UserService {
         user.setFullName(request.getFullName());
         user.setPhoneNumber(request.getPhoneNumber());
         user.setPassword(passwordEncoder.encode(request.getPassword()));
+        if (!request.getFavorite().isEmpty()) {
+            String joined = String.join(", ", request.getFavorite());
+            user.setFavorite(joined);
+        }
         Set<Role> roles = new HashSet<>();
         if (request.getRole().equals("admin")) {
             Role adminRole = roleRepository.findByName(ERole.ROLE_ADMIN)
@@ -80,6 +84,7 @@ public class UserServiceImpl implements UserService {
             User user = userOptional.get();
             return new UserDto(user.getId(), user.getUsername(), user.getEmail(), user.getFullName(), user.getPhoneNumber());
         }
+
         return new UserDto();
     }
 
