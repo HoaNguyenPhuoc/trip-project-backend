@@ -5,6 +5,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.List;
+
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
@@ -12,4 +14,5 @@ import lombok.Setter;
 public class ChangeInfoRequest {
     private String fullName;
     private String phoneNumber;
+    private List<String> favorite;
 }

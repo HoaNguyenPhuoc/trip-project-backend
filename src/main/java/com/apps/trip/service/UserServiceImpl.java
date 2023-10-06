@@ -9,15 +9,20 @@ import com.apps.trip.models.User;
 import com.apps.trip.repository.RoleRepository;
 import com.apps.trip.repository.UserRepository;
 import com.apps.trip.utils.AppsUtils;
+import org.apache.commons.lang3.ObjectUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -62,8 +67,10 @@ public class UserServiceImpl implements UserService {
     @Override
     public Page<UserDto> getUsers(Pageable pageable) {
         Page<User> users = userRepository.findAll(pageable);
-        return users.map(user ->
-                new UserDto(user.getId(), user.getUsername(), user.getEmail(), user.getFullName(), user.getPhoneNumber())
+        return users.map(user -> {
+                    List<String> collect = Arrays.stream(user.getFavorite().split(", ")).collect(Collectors.toList());
+                    return new UserDto(user.getId(), user.getUsername(), user.getEmail(), user.getFullName(), user.getPhoneNumber(), collect);
+                }
         );
     }
 
@@ -72,7 +79,11 @@ public class UserServiceImpl implements UserService {
         Optional<User> userOptional = getUser(username);
         if (userOptional.isPresent()) {
             User user = userOptional.get();
-            return new UserDto(user.getId(), user.getUsername(), user.getEmail(), user.getFullName(), user.getPhoneNumber());
+            List<String> collect = new ArrayList<>();
+            if (ObjectUtils.isNotEmpty(user.getFavorite())){
+                collect  = Arrays.stream(user.getFavorite().split(", ")).collect(Collectors.toList());;
+            }
+            return new UserDto(user.getId(), user.getUsername(), user.getEmail(), user.getFullName(), user.getPhoneNumber(), collect);
         }
         return new UserDto();
     }
@@ -82,7 +93,11 @@ public class UserServiceImpl implements UserService {
         Optional<User> userOptional = getUserById(id);
         if (userOptional.isPresent()) {
             User user = userOptional.get();
-            return new UserDto(user.getId(), user.getUsername(), user.getEmail(), user.getFullName(), user.getPhoneNumber());
+            List<String> collect = new ArrayList<>();
+            if (ObjectUtils.isNotEmpty(user.getFavorite())){
+                collect  = Arrays.stream(user.getFavorite().split(", ")).collect(Collectors.toList());;
+            }
+            return new UserDto(user.getId(), user.getUsername(), user.getEmail(), user.getFullName(), user.getPhoneNumber(), collect);
         }
 
         return new UserDto();
@@ -100,6 +115,10 @@ public class UserServiceImpl implements UserService {
             User user = userOptional.get();
             user.setFullName(request.getFullName());
             user.setPhoneNumber(request.getPhoneNumber());
+            if (!request.getFavorite().isEmpty()) {
+                String joined = String.join(", ", request.getFavorite());
+                user.setFavorite(joined);
+            }
             userRepository.save(user);
         }
     }
