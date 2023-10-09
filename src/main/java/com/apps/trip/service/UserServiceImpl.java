@@ -68,7 +68,10 @@ public class UserServiceImpl implements UserService {
     public Page<UserDto> getUsers(Pageable pageable) {
         Page<User> users = userRepository.findAll(pageable);
         return users.map(user -> {
-                    List<String> collect = Arrays.stream(user.getFavorite().split(", ")).collect(Collectors.toList());
+                    List<String> collect = new ArrayList<>();
+                    if (user.getFavorite() != null) {
+                        collect = Arrays.stream(user.getFavorite().split(", ")).collect(Collectors.toList());
+                    }
                     return new UserDto(user.getId(), user.getUsername(), user.getEmail(), user.getFullName(), user.getPhoneNumber(), collect);
                 }
         );
@@ -80,8 +83,9 @@ public class UserServiceImpl implements UserService {
         if (userOptional.isPresent()) {
             User user = userOptional.get();
             List<String> collect = new ArrayList<>();
-            if (ObjectUtils.isNotEmpty(user.getFavorite())){
-                collect  = Arrays.stream(user.getFavorite().split(", ")).collect(Collectors.toList());;
+            if (ObjectUtils.isNotEmpty(user.getFavorite())) {
+                collect = Arrays.stream(user.getFavorite().split(", ")).collect(Collectors.toList());
+                ;
             }
             return new UserDto(user.getId(), user.getUsername(), user.getEmail(), user.getFullName(), user.getPhoneNumber(), collect);
         }
@@ -94,8 +98,9 @@ public class UserServiceImpl implements UserService {
         if (userOptional.isPresent()) {
             User user = userOptional.get();
             List<String> collect = new ArrayList<>();
-            if (ObjectUtils.isNotEmpty(user.getFavorite())){
-                collect  = Arrays.stream(user.getFavorite().split(", ")).collect(Collectors.toList());;
+            if (ObjectUtils.isNotEmpty(user.getFavorite())) {
+                collect = Arrays.stream(user.getFavorite().split(", ")).collect(Collectors.toList());
+                ;
             }
             return new UserDto(user.getId(), user.getUsername(), user.getEmail(), user.getFullName(), user.getPhoneNumber(), collect);
         }
