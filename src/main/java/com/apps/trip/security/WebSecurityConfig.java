@@ -42,6 +42,8 @@ public class WebSecurityConfig { // extends WebSecurityConfigurerAdapter {
             "/user/login",
             "/tours/**",
             "/reviews/**",
+            "/rating/**",
+            "/favorite/**"
     };
     @Bean
     public AuthTokenFilter authenticationJwtTokenFilter() {
