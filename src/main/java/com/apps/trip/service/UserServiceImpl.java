@@ -136,6 +136,10 @@ public class UserServiceImpl implements UserService {
             User user = userOptional.get();
             user.setFullName(request.getFullName());
             user.setPhoneNumber(request.getPhoneNumber());
+            if (!request.getFavorite().isEmpty()) {
+                String joined = String.join(", ", request.getFavorite());
+                user.setFavorite(joined);
+            }
             userRepository.save(user);
         }
     }
