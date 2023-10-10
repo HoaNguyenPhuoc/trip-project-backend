@@ -100,7 +100,6 @@ public class UserServiceImpl implements UserService {
             List<String> collect = new ArrayList<>();
             if (ObjectUtils.isNotEmpty(user.getFavorite())) {
                 collect = Arrays.stream(user.getFavorite().split(", ")).collect(Collectors.toList());
-                ;
             }
             return new UserDto(user.getId(), user.getUsername(), user.getEmail(), user.getFullName(), user.getPhoneNumber(), collect);
         }

@@ -2,10 +2,11 @@ package com.apps.trip.controllers;
 
 import com.apps.trip.dto.SearchRequest;
 import com.apps.trip.dto.TourRequest;
+import com.apps.trip.dto.TourResponse;
 import com.apps.trip.models.Tour;
 import com.apps.trip.payload.response.ResponseJson;
 import com.apps.trip.service.TourService;
-import org.apache.commons.lang3.ObjectUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.ResponseEntity;
@@ -19,9 +20,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import static com.apps.trip.controllers.UserController.SUCCESS;
 
@@ -41,15 +45,38 @@ public class TourController {
     }
 
     @PostMapping("filter")
-    public ResponseEntity<Page<Tour>> getListUsers(@RequestParam("page") int page, @RequestParam("size") int size,
-                                                   @RequestBody SearchRequest request) {
+    public ResponseEntity<Page<TourResponse>> getListUsers(@RequestParam("page") int page, @RequestParam("size") int size,
+                                                           @RequestBody SearchRequest request) {
         return ResponseEntity.ok(tourService.findAll(PageRequest.of(page, size), request));
     }
 
     @GetMapping("{id}")
-    public ResponseEntity<Tour> findById(@PathVariable("id") Long id) {
+    public ResponseEntity<TourResponse> findById(@PathVariable("id") Long id) {
         Optional<Tour> byId = tourService.findById(id);
-        return byId.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.ok(null));
+        if (byId.isPresent()) {
+            List<String> collect = new ArrayList<>();
+            Tour tour = byId.get();
+            if (StringUtils.isNotBlank(tour.getFavorite())) {
+                collect = Arrays.stream(tour.getFavorite().split(", ")).collect(Collectors.toList());
+            }
+            TourResponse tourResponse = new TourResponse(
+                    tour.getId(),
+                    tour.getName(),
+                    tour.getCountry(),
+                    tour.getDuration(),
+                    tour.getType(),
+                    tour.getScale(),
+                    tour.getPlace(),
+                    tour.getDescription(),
+                    tour.getPrice(),
+                    tour.getImg(),
+                    collect,
+                    tour.getComment(),
+                    tour.getRatings()
+                    );
+            return ResponseEntity.ok(tourResponse);
+        }
+        return ResponseEntity.ok(null);
     }
 
     @PutMapping("{id}")

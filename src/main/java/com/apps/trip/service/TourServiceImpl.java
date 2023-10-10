@@ -2,6 +2,7 @@ package com.apps.trip.service;
 
 import com.apps.trip.dto.SearchRequest;
 import com.apps.trip.dto.TourRequest;
+import com.apps.trip.dto.TourResponse;
 import com.apps.trip.models.Tour;
 import com.apps.trip.models.User;
 import com.apps.trip.repository.TourRepository;
@@ -9,10 +10,12 @@ import com.apps.trip.utils.AppsUtils;
 import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
@@ -31,8 +34,32 @@ public class TourServiceImpl implements TourService {
     }
 
     @Override
-    public Page<Tour> findAll(Pageable pageable, SearchRequest request) {
-        return tourRepository.findByNameContainsIgnoreCase(request.getSearchKey(), pageable);
+    public Page<TourResponse> findAll(Pageable pageable, SearchRequest request) {
+        Page<Tour> tourPage = tourRepository.findByNameContainsIgnoreCase(request.getSearchKey(), pageable);
+        List<Tour> tours = tourPage.getContent();
+        List<TourResponse> collect = tours.stream().map(item -> {
+            List<String> favorite = new ArrayList<>();
+            String favoriteString = item.getFavorite();
+            if (StringUtils.isNotBlank(favoriteString)) {
+                favorite = Arrays.stream(favoriteString.split(", ")).collect(Collectors.toList());
+            }
+            return new TourResponse(
+                    item.getId(),
+                    item.getName(),
+                    item.getCountry(),
+                    item.getDuration(),
+                    item.getType(),
+                    item.getScale(),
+                    item.getPlace(),
+                    item.getDescription(),
+                    item.getPrice(),
+                    item.getImg(),
+                    favorite,
+                    new ArrayList<>(),
+                    new ArrayList<>()
+            );
+        }).collect(Collectors.toList());
+        return new PageImpl<>(collect, pageable, tourPage.getTotalPages());
     }
 
     @Override
@@ -106,7 +133,7 @@ public class TourServiceImpl implements TourService {
     @Override
     public Set<Tour> getTourRecomment() {
         Set<Tour> tours = new HashSet<>();
-        if(!StringUtils.isBlank(AppsUtils.getUsername())){
+        if (!StringUtils.isBlank(AppsUtils.getUsername())) {
             User user = userService.findByUsername(AppsUtils.getUsername());
             List<String> collect = Arrays.stream(user.getFavorite().split(", ")).collect(Collectors.toList());
 
