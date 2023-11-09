@@ -41,18 +41,21 @@ public class Tour {
 
     private String place;
 
-    @Column(columnDefinition="TEXT")
+    @Column(columnDefinition = "TEXT")
     private String description;
 
     private int price;
 
     private String favorite;
 
-    @Column(name = "img", columnDefinition="TEXT")
+    @Column(name = "img", columnDefinition = "TEXT")
     private String img;
 
     @OneToMany(mappedBy = "tour", cascade = CascadeType.ALL)
     private List<Comment> comment;
+
+    @OneToMany(mappedBy = "images", cascade = CascadeType.ALL)
+    private List<Images> images;
 
     @JsonIgnore
     @OneToMany(mappedBy = "tour", cascade = CascadeType.ALL)
